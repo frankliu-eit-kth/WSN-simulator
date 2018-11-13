@@ -52,7 +52,7 @@ public class Node {
 			return false;
 		}
 		for(Node n:this.neighbors) {
-			if(n.onMessagePath=false) {
+			if(n.onMessagePath==false) {
 				return true;
 			}
 		}
@@ -160,8 +160,11 @@ public class Node {
 
 	@Override
 	public String toString() {
-		return "Node [id=" + id + ", x=" + x + ", y=" + y + ", onMessagePath=" + onMessagePath + ", isSink=" + isSink+"]";
+		return "Node [id=" + id + ", x=" + x + ", y=" + y + ", onMessagePath=" + onMessagePath + ", isSink=" + isSink
+				+ "]";
 	}
+
+	
 
 	
 	

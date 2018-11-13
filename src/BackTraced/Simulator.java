@@ -88,38 +88,55 @@ public class Simulator {
 		    return;
 		}
 		
-		//this.source.setOnMessagePath(true);
+		
 		Node currentNode=this.source;
 		System.out.println("start from "+currentNode.toString());
 		Node nextNode=currentNode.getRandomNeighbor();
 		
 		while(!nextNode.isSink()) {
 			if(!nextNode.isOnMessagePath()) {
+				
 				currentNode.setOnMessagePath(true);
-				//System.out.println("step "+(routingStep++) +" "+ currentNode.toString());
-				//currentNode.setOnMessagePath(true);
+				
 				if(nextNode.getNextRandomPathNode()==null){
+					
+					nextNode.setPreviousNode(currentNode);
+					
 					currentNode=nextNode;
+					
 					nextNode=nextNode.getRandomNeighbor();
 				}
 				else {
+					
+					nextNode.setPreviousNode(currentNode);
+					
 					currentNode=nextNode;
+					
 					nextNode=nextNode.getNextRandomPathNode();
 				}
 				System.out.println("step "+(routingStep++)+" "+currentNode.toString());
 				continue;
 			}
+			System.out.println();
 			nextNode=currentNode.getRandomNeighbor();
-			if(nextNode.checkAvailableNeighbor()==false&&nextNode.isSink()==false) {
+			System.out.println("current: "+currentNode.toString());
+			System.out.println("next: "+nextNode.toString());
+			System.out.println("previous: "+currentNode.getPreviousNode().toString());
+			
+			if(currentNode.checkAvailableNeighbor()==false&&nextNode.isSink()==false) {
+				
+				System.out.println(currentNode.checkAvailableNeighbor());
+				System.out.println(nextNode.isSink());
 				System.out.println("routing get stuck");
 				Node previousNode=currentNode.getPreviousNode();
 				System.out.println("back trace to"+previousNode.toString());
-				currentNode.setOnMessagePath(false);
-				currentNode=currentNode.getPreviousNode();
+				currentNode.setOnMessagePath(true);
+				currentNode=previousNode;
 				nextNode=currentNode.getRandomNeighbor();
 			}
 		}
 		System.out.println("reach sink"+ nextNode.toString());
+		System.out.println();
 	}
 
 }
