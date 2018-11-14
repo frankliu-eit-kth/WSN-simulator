@@ -3,32 +3,32 @@ package BackTraced;
 import java.util.LinkedList;
 
 public class Randompath {
-	private LinkedList<Node> path;
+	private LinkedList<BackTracedNode> path;
 	
 	
 	public Randompath() {
-		this.path=new LinkedList<Node>();
+		this.path=new LinkedList<BackTracedNode>();
 	}
-	public Randompath(LinkedList<Node> nodes) {
+	public Randompath(LinkedList<BackTracedNode> nodes) {
 		// TODO Auto-generated constructor stub
 		this.path=path;
 	}
 	
 	
-	public void addNode(Node n) {
+	public void addNode(BackTracedNode n) {
 		if(path.size()==0) {
 		path.add(n);
 		}else {
-			Node lastNode=path.get(path.size()-1);
+			BackTracedNode lastNode=path.get(path.size()-1);
 			lastNode.setNextRandomPathNode(n);
 			n.setFormerRamdomPathNode(lastNode);
 			path.add(n);
 		}
 	}
-	public LinkedList<Node> getPath() {
+	public LinkedList<BackTracedNode> getPath() {
 		return path;
 	}
-	public void setPath(LinkedList<Node> path) {
+	public void setPath(LinkedList<BackTracedNode> path) {
 		this.path = path;
 	}
 	

@@ -1,7 +1,7 @@
 package MultiRoutingRandomWalk;
 import java.util.ArrayList;
 
-public class Node {
+public class MultiRandomNode {
 	private int id;
 	private int x;
 	private int y;
@@ -9,22 +9,22 @@ public class Node {
 	private boolean onMessagePath=false;
 	private boolean isSink=false;
 	
-	private ArrayList<Node> neighbors=new ArrayList<Node>();
-	private Node nextRandomPathNode;
-	private Node formerRamdomPathNode;
+	private ArrayList<MultiRandomNode> neighbors=new ArrayList<MultiRandomNode>();
+	private MultiRandomNode nextRandomPathNode;
+	private MultiRandomNode formerRamdomPathNode;
 	//protected abstract void routingAlgorithm();
 	
-	public Node(int id,int x, int y) {
+	public MultiRandomNode(int id,int x, int y) {
 		this.id=id;
 		this.x=x;
 		this.y=y;
-		this.neighbors=new ArrayList<Node>();
+		this.neighbors=new ArrayList<MultiRandomNode>();
 		this.nextRandomPathNode=null;
 		this.formerRamdomPathNode=null;
 	}
 	
-	public void findNeighbors(ArrayList<Node> allNodes, double distanceBound) {
-		for(Node n:allNodes) {
+	public void findNeighbors(ArrayList<MultiRandomNode> allNodes, double distanceBound) {
+		for(MultiRandomNode n:allNodes) {
 			int nodeX=n.getX();
 			int nodeY=n.getY();
 			if(nodeX==this.x && nodeY==this.y) {
@@ -37,7 +37,7 @@ public class Node {
 		}
 	}
 	
-	public Node getRandomNeighbor() {
+	public MultiRandomNode getRandomNeighbor() {
 		if(this.getNeighbors().size()==0) {
 			return null;
 		}
@@ -46,11 +46,11 @@ public class Node {
 
 	
 	
-	public ArrayList<Node> getNeighbors() {
+	public ArrayList<MultiRandomNode> getNeighbors() {
 		return neighbors;
 	}
 
-	public void setNeighbors(ArrayList<Node> neighbors) {
+	public void setNeighbors(ArrayList<MultiRandomNode> neighbors) {
 		this.neighbors = neighbors;
 	}
 
@@ -94,19 +94,19 @@ public class Node {
 		this.isSink = isSink;
 	}
 
-	public Node getNextRandomPathNode() {
+	public MultiRandomNode getNextRandomPathNode() {
 		return nextRandomPathNode;
 	}
 
-	public void setNextRandomPathNode(Node nextRandomPathNode) {
+	public void setNextRandomPathNode(MultiRandomNode nextRandomPathNode) {
 		this.nextRandomPathNode = nextRandomPathNode;
 	}
 
-	public Node getFormerRamdomPathNode() {
+	public MultiRandomNode getFormerRamdomPathNode() {
 		return formerRamdomPathNode;
 	}
 
-	public void setFormerRamdomPathNode(Node formerRamdomPathNode) {
+	public void setFormerRamdomPathNode(MultiRandomNode formerRamdomPathNode) {
 		this.formerRamdomPathNode = formerRamdomPathNode;
 	}
 
@@ -127,7 +127,7 @@ public class Node {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Node other = (Node) obj;
+		MultiRandomNode other = (MultiRandomNode) obj;
 		if (x != other.x)
 			return false;
 		if (y != other.y)

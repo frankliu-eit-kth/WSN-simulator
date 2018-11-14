@@ -3,36 +3,39 @@ package MultiRoutingRandomWalk;
 import java.util.ArrayList;
 
 public class Simulator {
-	private ArrayList<Node> nodes;
+	private ArrayList<MultiRandomNode> nodes;
 	private ArrayList<Randompath> randomPaths;
-	private final int xLength=10;
-	private final int yLength=10;
-	private final int numNodes=64;
+	private final int xLength=20;
+	private final int yLength=20;
+	private final int numNodes=50;
 	private final int numPaths=5;
 	private final int maxLengthRandomPath=5;
 	private static int routingStep=1;
 	private final double radioRange=5;	
-	private Node source;
-	private Node sink;
-
+	private MultiRandomNode source;
+	private MultiRandomNode sink;
+	private Plane plane;
+	
+	
 	public Simulator() {
 		// TODO Auto-generated constructor stub
 		super();
-		this.nodes=new ArrayList<Node>();
+		this.nodes=new ArrayList<MultiRandomNode>();
 		this.randomPaths=new ArrayList<Randompath>();
 		initNodes();
 		initRandomPaths();
 		this.source=nodes.get(GenerateRandomInt.randomInt(0, numNodes-1));
 		this.sink=nodes.get(GenerateRandomInt.randomInt(0, numNodes-1));
 		this.sink.setSink(true);
+		this.plane=new Plane(xLength,yLength,nodes,randomPaths,source,sink);
 	}
 	
 	private void initNodes() {
 		//generate new nodes
 		for(int i=1;i<=this.numNodes;) {
-			int nodeX=GenerateRandomInt.randomInt(0, xLength);
-			int nodeY=GenerateRandomInt.randomInt(0, yLength);
-			Node newNode=new Node(i,nodeX,nodeY);
+			int nodeX=GenerateRandomInt.randomInt(0, xLength-1);
+			int nodeY=GenerateRandomInt.randomInt(0, yLength-1);
+			MultiRandomNode newNode=new MultiRandomNode(i,nodeX,nodeY);
 			if(nodes.contains(newNode)) {
 				continue;
 			}else {
@@ -40,7 +43,7 @@ public class Simulator {
 				i++;
 			}
 		}
-		for(Node n:nodes) {
+		for(MultiRandomNode n:nodes) {
 			n.findNeighbors(nodes, radioRange);
 		}
 		
@@ -55,19 +58,19 @@ public class Simulator {
 			
 			
 			//generate a path with length pathLength
-			Node startNode=null;
+			MultiRandomNode startNode=null;
 			while(startNode==null) {
-				Node n=nodes.get(GenerateRandomInt.randomInt(0, numNodes-1));
+				MultiRandomNode n=nodes.get(GenerateRandomInt.randomInt(0, numNodes-1));
 				if(n.getNextRandomPathNode()==null&& n.getFormerRamdomPathNode()==null) {
 					startNode=n;
 				}
 			}
 			
 			newPath.addNode(startNode);
-			Node currentNode=startNode;
+			MultiRandomNode currentNode=startNode;
 			
 			while(newPath.getPath().size()<pathLength) {
-				Node next=currentNode.getRandomNeighbor();
+				MultiRandomNode next=currentNode.getRandomNeighbor();
 				if(next==null) {
 					break;
 				}
@@ -89,13 +92,14 @@ public class Simulator {
 		}
 		
 		//this.source.setOnMessagePath(true);
-		Node currentNode=this.source;
+		MultiRandomNode currentNode=this.source;
 		System.out.println("start from "+currentNode.toString());
-		Node nextNode=currentNode.getRandomNeighbor();
+		MultiRandomNode nextNode=currentNode.getRandomNeighbor();
 		
 		while(!nextNode.isSink()) {
 			if(!nextNode.isOnMessagePath()) {
 				currentNode.setOnMessagePath(true);
+				plane.update(currentNode);
 				//System.out.println("step "+(routingStep++) +" "+ currentNode.toString());
 				//currentNode.setOnMessagePath(true);
 				if(nextNode.getNextRandomPathNode()==null){
@@ -103,6 +107,7 @@ public class Simulator {
 					nextNode=nextNode.getRandomNeighbor();
 				}
 				else {
+					System.out.println("following random path");
 					currentNode=nextNode;
 					nextNode=nextNode.getNextRandomPathNode();
 				}

@@ -1,7 +1,7 @@
 package BackTraced;
 import java.util.ArrayList;
 
-public class Node {
+public class BackTracedNode  {
 	private int id;
 	private int x;
 	private int y;
@@ -9,25 +9,25 @@ public class Node {
 	private boolean onMessagePath=false;
 	private boolean isSink=false;
 	
-	private ArrayList<Node> neighbors=new ArrayList<Node>();
-	private Node nextRandomPathNode;
-	private Node formerRamdomPathNode;
-	private Node previousNode;
+	private ArrayList<BackTracedNode> neighbors=new ArrayList<BackTracedNode>();
+	private BackTracedNode nextRandomPathNode;
+	private BackTracedNode formerRamdomPathNode;
+	private BackTracedNode previousNode;
 	
 	
 	//protected abstract void routingAlgorithm();
 	
-	public Node(int id,int x, int y) {
+	public BackTracedNode(int id,int x, int y) {
 		this.id=id;
 		this.x=x;
 		this.y=y;
-		this.neighbors=new ArrayList<Node>();
+		this.neighbors=new ArrayList<BackTracedNode>();
 		this.nextRandomPathNode=null;
 		this.formerRamdomPathNode=null;
 	}
 	
-	public void findNeighbors(ArrayList<Node> allNodes, double distanceBound) {
-		for(Node n:allNodes) {
+	public void findNeighbors(ArrayList<BackTracedNode> allNodes, double distanceBound) {
+		for(BackTracedNode n:allNodes) {
 			int nodeX=n.getX();
 			int nodeY=n.getY();
 			if(nodeX==this.x && nodeY==this.y) {
@@ -40,7 +40,7 @@ public class Node {
 		}
 	}
 	
-	public Node getRandomNeighbor() {
+	public BackTracedNode getRandomNeighbor() {
 		if(this.getNeighbors().size()==0) {
 			return null;
 		}
@@ -51,7 +51,7 @@ public class Node {
 		if(this.getNeighbors().size()==0) {
 			return false;
 		}
-		for(Node n:this.neighbors) {
+		for(BackTracedNode n:this.neighbors) {
 			if(n.onMessagePath==false) {
 				return true;
 			}
@@ -60,11 +60,11 @@ public class Node {
 	}
 	
 	
-	public ArrayList<Node> getNeighbors() {
+	public ArrayList<BackTracedNode> getNeighbors() {
 		return neighbors;
 	}
 
-	public void setNeighbors(ArrayList<Node> neighbors) {
+	public void setNeighbors(ArrayList<BackTracedNode> neighbors) {
 		this.neighbors = neighbors;
 	}
 
@@ -108,28 +108,28 @@ public class Node {
 		this.isSink = isSink;
 	}
 
-	public Node getNextRandomPathNode() {
+	public BackTracedNode getNextRandomPathNode() {
 		return nextRandomPathNode;
 	}
 
-	public void setNextRandomPathNode(Node nextRandomPathNode) {
+	public void setNextRandomPathNode(BackTracedNode nextRandomPathNode) {
 		this.nextRandomPathNode = nextRandomPathNode;
 	}
 
-	public Node getFormerRamdomPathNode() {
+	public BackTracedNode getFormerRamdomPathNode() {
 		return formerRamdomPathNode;
 	}
 
-	public void setFormerRamdomPathNode(Node formerRamdomPathNode) {
+	public void setFormerRamdomPathNode(BackTracedNode formerRamdomPathNode) {
 		this.formerRamdomPathNode = formerRamdomPathNode;
 	}
 
 	
-	public Node getPreviousNode() {
+	public BackTracedNode getPreviousNode() {
 		return previousNode;
 	}
 
-	public void setPreviousNode(Node previousNode) {
+	public void setPreviousNode(BackTracedNode previousNode) {
 		this.previousNode = previousNode;
 	}
 
@@ -150,7 +150,7 @@ public class Node {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Node other = (Node) obj;
+		BackTracedNode other = (BackTracedNode) obj;
 		if (x != other.x)
 			return false;
 		if (y != other.y)
