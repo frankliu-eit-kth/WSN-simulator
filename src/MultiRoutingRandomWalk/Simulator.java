@@ -116,6 +116,7 @@ public class Simulator {
 			}
 			nextNode=currentNode.getRandomNeighbor();
 			
+			
 		}
 		System.out.println("reach sink"+ nextNode.toString());
 	}

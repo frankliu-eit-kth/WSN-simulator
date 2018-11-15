@@ -7,8 +7,8 @@ import java.util.ArrayList;
 public class Simulator {
 	private ArrayList<BackTracedNode> nodes;
 	private ArrayList<Randompath> randomPaths;
-	private final int xLength=10;
-	private final int yLength=10;
+	private final int xLength=20;
+	private final int yLength=20;
 	private final int numNodes=64;
 	private final int numPaths=5;
 	private final int maxLengthRandomPath=5;
@@ -128,13 +128,20 @@ public class Simulator {
 			System.out.println("next: "+nextNode.toString());
 			System.out.println("previous: "+currentBackTracedNode.getPreviousNode().toString());
 			
+			//only difference of the multi and back traced
 			if(currentBackTracedNode.checkAvailableNeighbor()==false&&nextNode.isSink()==false) {
 				
 				System.out.println(currentBackTracedNode.checkAvailableNeighbor());
 				System.out.println(nextNode.isSink());
 				System.out.println("routing get stuck");
+				
+				
 				BackTracedNode previousNode=currentBackTracedNode.getPreviousNode();
+				
+				
 				System.out.println("back trace to"+previousNode.toString());
+				
+				
 				currentBackTracedNode.setOnMessagePath(true);
 				plane.update(currentBackTracedNode);
 				currentBackTracedNode=previousNode;

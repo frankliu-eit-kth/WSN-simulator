@@ -12,6 +12,7 @@ public class BackTracedNode  {
 	private ArrayList<BackTracedNode> neighbors=new ArrayList<BackTracedNode>();
 	private BackTracedNode nextRandomPathNode;
 	private BackTracedNode formerRamdomPathNode;
+	//another difference
 	private BackTracedNode previousNode;
 	
 	
