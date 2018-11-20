@@ -45,10 +45,10 @@ public class FileOutput {
 		}
 	}
 
-	public void outputSimulation(String algorithm,int fileId, int area, int numNodes, int numPath, ArrayList<Node> nodes,Node source, Node sink,ArrayList<Randompath> paths, ArrayList<Node> steps) {
+	public void outputSimulation(String fileFolder,String algorithm,int fileId, int area, int numNodes, int numPath, ArrayList<Node> nodes,Node source, Node sink,ArrayList<Randompath> paths, ArrayList<Node> steps) {
 		//create file name
 		StringJoiner sj=new StringJoiner(";");
-		sj.add("Simulation "+fileId);
+		sj.add(fileFolder+"Simulation "+fileId);
 		sj.add(algorithm);
 		sj.add("area "+area);
 		sj.add("node number"+numNodes);

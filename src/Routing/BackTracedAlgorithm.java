@@ -25,7 +25,7 @@ public class BackTracedAlgorithm {
 		super();	
 	}
 	
-	public ArrayList<Node> routing(ArrayList<Node> nodes, Node source,Node sink) {
+	public ArrayList<Node> routing(ArrayList<Node> nodes, Node source,Node sink,Plane plane) {
 		ArrayList<Node> steps=new ArrayList<Node>();
 		if(source.isSink()) {
 			steps.add(source);
@@ -43,7 +43,7 @@ public class BackTracedAlgorithm {
 			if(!nextNode.isOnMessagePath()) {
 				
 				currentBackTracedNode.setOnMessagePath(true);
-				//plane.update(currentBackTracedNode);
+				plane.update(currentBackTracedNode);
 				steps.add(currentBackTracedNode);
 				
 				if(nextNode.getNextRandomPathNode()==null){
@@ -90,7 +90,7 @@ public class BackTracedAlgorithm {
 				}
 				
 				currentBackTracedNode.setOnMessagePath(true);
-				//plane.update(currentBackTracedNode);
+				plane.update(currentBackTracedNode);
 				steps.add(currentBackTracedNode);
 				currentBackTracedNode=previousNode;
 				nextNode=currentBackTracedNode.getRandomNeighbor();

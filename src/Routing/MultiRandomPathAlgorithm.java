@@ -12,7 +12,7 @@ public class MultiRandomPathAlgorithm {
 	private int reachSink=0;
 
 	public MultiRandomPathAlgorithm() {
-		super();	
+		super();
 	}
 	
 	public ArrayList<Node> routing(ArrayList<Node> nodes, Node source,Node sink) {
@@ -28,6 +28,9 @@ public class MultiRandomPathAlgorithm {
 		Node currentBackTracedNode=source;
 		System.out.println("start from "+currentBackTracedNode.toString());
 		Node nextNode=currentBackTracedNode.getRandomNeighbor();
+		if(nextNode==null) {
+			return steps;
+		}
 		
 		while(!nextNode.isSink()) {
 			if(!nextNode.isOnMessagePath()) {
@@ -57,18 +60,18 @@ public class MultiRandomPathAlgorithm {
 			}
 			System.out.println();
 			nextNode=currentBackTracedNode.getRandomNeighbor();
-			System.out.println("current: "+currentBackTracedNode.toString());
-			System.out.println("next: "+nextNode.toString());
-			if(currentBackTracedNode.getPreviousNode()!=null) {
-				System.out.println("previous: "+currentBackTracedNode.getPreviousNode().toString());
-			}
+			//System.out.println("current: "+currentBackTracedNode.toString());
+			//System.out.println("next: "+nextNode.toString());
+			//if(currentBackTracedNode.getPreviousNode()!=null) {
+				//System.out.println("previous: "+currentBackTracedNode.getPreviousNode().toString());
+			//}
 			
 			//only difference between the multi and back traced
 			if(currentBackTracedNode.checkAvailableNeighbor()==false&&nextNode.isSink()==false) {
 				
 				//System.out.println(currentBackTracedNode.checkAvailableNeighbor());
 				//System.out.println(nextNode.isSink());
-				System.out.println("routing get stuck");
+				//System.out.println("routing get stuck");
 				return steps;
 			}
 		}
