@@ -1,17 +1,15 @@
-package BackTraced;
+package Model;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import BackTraced.BackTracedNode;
-
 public class Plane {
 	private char[][] screen;
 	PrintWriter writer ;
 	
-	public void initNodes(ArrayList<BackTracedNode> nodes) {
-		for(BackTracedNode n:nodes) {
+	public void initNodes(ArrayList<Node> nodes) {
+		for(Node n:nodes) {
 			int nodeX=n.getX();
 			int nodeY=n.getY();
 			this.screen[nodeX][nodeY]='N';
@@ -21,8 +19,8 @@ public class Plane {
 	public void initRandomPath(ArrayList<Randompath> paths) {
 		int pathNum=1;
 		for(Randompath p:paths) {
-			LinkedList<BackTracedNode> nodes=p.getPath();
-			for(BackTracedNode n:nodes) {
+			LinkedList<Node> nodes=p.getPath();
+			for(Node n:nodes) {
 				int nodeX=n.getX();
 				int nodeY=n.getY();
 				char c=new String(""+pathNum).toCharArray()[0];
@@ -33,7 +31,7 @@ public class Plane {
 	}
 
 	
-	public Plane(int xLength, int yLength,ArrayList<BackTracedNode> nodes, ArrayList<Randompath> paths,BackTracedNode source,BackTracedNode sink) {
+	public Plane(int xLength, int yLength,ArrayList<Node> nodes, ArrayList<Randompath> paths,Node source,Node sink) {
 		// TODO Auto-generated constructor stub
 		
 		screen =new char[xLength][yLength];
@@ -57,7 +55,7 @@ public class Plane {
 	}
 	
 	
-	public void update(BackTracedNode currentNode) {
+	public void update(Node currentNode) {
 		int x=currentNode.getX();
 		int y=currentNode.getY();
 		screen[x][y]='@';

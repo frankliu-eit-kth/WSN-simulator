@@ -1,7 +1,10 @@
-package MultiRoutingRandomWalk;
+package Model;
+
 import java.util.ArrayList;
 
-public class MultiRandomNode {
+import Util.GenerateRandomInt;
+
+public class Node  {
 	private int id;
 	private int x;
 	private int y;
@@ -9,22 +12,22 @@ public class MultiRandomNode {
 	private boolean onMessagePath=false;
 	private boolean isSink=false;
 	
-	private ArrayList<MultiRandomNode> neighbors=new ArrayList<MultiRandomNode>();
-	private MultiRandomNode nextRandomPathNode;
-	private MultiRandomNode formerRamdomPathNode;
-	//protected abstract void routingAlgorithm();
-	
-	public MultiRandomNode(int id,int x, int y) {
+	private ArrayList<Node> neighbors=new ArrayList<Node>();
+	private Node nextRandomPathNode;
+	private Node formerRamdomPathNode;
+	private Node previousNode;
+
+	public Node(int id,int x, int y) {
 		this.id=id;
 		this.x=x;
 		this.y=y;
-		this.neighbors=new ArrayList<MultiRandomNode>();
+		this.neighbors=new ArrayList<Node>();
 		this.nextRandomPathNode=null;
 		this.formerRamdomPathNode=null;
 	}
 	
-	public void findNeighbors(ArrayList<MultiRandomNode> allNodes, double distanceBound) {
-		for(MultiRandomNode n:allNodes) {
+	public void findNeighbors(ArrayList<Node> allNodes, double distanceBound) {
+		for(Node n:allNodes) {
 			int nodeX=n.getX();
 			int nodeY=n.getY();
 			if(nodeX==this.x && nodeY==this.y) {
@@ -37,20 +40,31 @@ public class MultiRandomNode {
 		}
 	}
 	
-	public MultiRandomNode getRandomNeighbor() {
+	public Node getRandomNeighbor() {
 		if(this.getNeighbors().size()==0) {
 			return null;
 		}
 		return (this.getNeighbors().get(GenerateRandomInt.randomInt(0, this.getNeighbors().size()-1)));
 	}
 
+	public boolean checkAvailableNeighbor() {
+		if(this.getNeighbors().size()==0) {
+			return false;
+		}
+		for(Node n:this.neighbors) {
+			if(n.onMessagePath==false) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	
-	public ArrayList<MultiRandomNode> getNeighbors() {
+	public ArrayList<Node> getNeighbors() {
 		return neighbors;
 	}
 
-	public void setNeighbors(ArrayList<MultiRandomNode> neighbors) {
+	public void setNeighbors(ArrayList<Node> neighbors) {
 		this.neighbors = neighbors;
 	}
 
@@ -94,20 +108,29 @@ public class MultiRandomNode {
 		this.isSink = isSink;
 	}
 
-	public MultiRandomNode getNextRandomPathNode() {
+	public Node getNextRandomPathNode() {
 		return nextRandomPathNode;
 	}
 
-	public void setNextRandomPathNode(MultiRandomNode nextRandomPathNode) {
+	public void setNextRandomPathNode(Node nextRandomPathNode) {
 		this.nextRandomPathNode = nextRandomPathNode;
 	}
 
-	public MultiRandomNode getFormerRamdomPathNode() {
+	public Node getFormerRamdomPathNode() {
 		return formerRamdomPathNode;
 	}
 
-	public void setFormerRamdomPathNode(MultiRandomNode formerRamdomPathNode) {
+	public void setFormerRamdomPathNode(Node formerRamdomPathNode) {
 		this.formerRamdomPathNode = formerRamdomPathNode;
+	}
+
+	
+	public Node getPreviousNode() {
+		return previousNode;
+	}
+
+	public void setPreviousNode(Node previousNode) {
+		this.previousNode = previousNode;
 	}
 
 	@Override
@@ -127,7 +150,7 @@ public class MultiRandomNode {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MultiRandomNode other = (MultiRandomNode) obj;
+		Node other = (Node) obj;
 		if (x != other.x)
 			return false;
 		if (y != other.y)
@@ -137,8 +160,11 @@ public class MultiRandomNode {
 
 	@Override
 	public String toString() {
-		return "Node [id=" + id + ", x=" + x + ", y=" + y + ", onMessagePath=" + onMessagePath + ", isSink=" + isSink+"]";
+		return "Node [id=" + id + ", x=" + x + ", y=" + y + ", onMessagePath=" + onMessagePath + ", isSink=" + isSink
+				+ "]";
 	}
+
+	
 
 	
 	
